@@ -1,0 +1,10 @@
+pandas
+numpy
+statsmodels
+seaborn
+matplotlib
+plotly
+scikit-learn
+chardet
+ipython
+nbformat>=4.2.0
