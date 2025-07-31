@@ -1,4 +1,4 @@
-#!/home/wvmwill/enviroment/retail-e-commerce-evidence/.venv/bin/python
+#!/Users/will/enviroment/retail-e-commerce-evidence/.venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
