@@ -5,6 +5,7 @@ seaborn
 matplotlib
 plotly
 scikit-learn
+graphviz
 chardet
 ipython
 nbformat>=4.2.0
