@@ -1,23 +1,39 @@
--- SQLite
-CREATE TABLE IF NOT EXISTS mostvalue_client AS
-WITH client_summary AS (
+--DROP TABLE IF EXISTS mostvalue_client; --if needed delete or refresh table
+
+CREATE TABLE mostvalue_client AS
+
+WITH filter_values_returned AS (
     SELECT
-        CustomerId,
-        Count(StockCode) AS total_items,
-        Count(DISTINCT StockCode) AS unique_items,
-        avg(UnitPrice) AS avg_price,
-        SUM(Quantity * UnitPrice) AS Revenue
+        CustomerID,
+        StockCode,
+        Description,
+        UnitPrice,
+        SUM(CASE WHEN Quantity > 0 THEN Quantity ELSE 0 END) AS total_bought,
+        ABS(SUM(CASE WHEN Quantity < 0 THEN Quantity ELSE 0 END)) AS total_returned,
+        SUM(Quantity) AS net_quantity, 
+        SUM(Quantity * UnitPrice) AS total_revenue
     FROM transactions
+    WHERE Description IS NOT NULL
+    GROUP BY CustomerID, StockCode, Description
+),
+
+client_summary AS (
+    SELECT
+        CustomerID,
+        COUNT(StockCode) AS total_items,
+        COUNT(DISTINCT StockCode) AS unique_items,
+        AVG(UnitPrice) AS avg_price,
+        SUM(total_revenue) AS total_revenue
+    FROM filter_values_returned
     WHERE CustomerID IS NOT NULL
     GROUP BY CustomerID
 )
 
 SELECT
-    CustomerId,
+    CustomerID,
     total_items,
     unique_items,
     ROUND(avg_price, 2) AS avg_price_unit,
-    Revenue
+    total_revenue
 FROM client_summary
-ORDER BY Revenue DESC;
---client com consumo de produtos mais variados, quero ver a receita, a quantidade, preco medio desses produtos
+ORDER BY total_revenue DESC;
