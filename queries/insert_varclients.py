@@ -14,7 +14,8 @@ def execute_sql_script(script_path, db_name):
     except FileNotFoundError:
         print(f"Error: SQL script not found at {script_path}")
 
-execute_sql_script('mostvalue_client.sql', 'retail.db')
+#execute_sql_script('mostvalue_client.sql', 'retail.db')
+execute_sql_script('main_country_consumption.sql', 'retail.db')
 # %%
 
 df = pd.read_csv('../data/data_encoding.csv', encoding='ISO-8859-1')

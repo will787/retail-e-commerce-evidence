@@ -1,4 +1,6 @@
 -- SQLite
+--DROP TABLE IF EXISTS country_consumption; --if needed delete or refresh table
+--CREATE TABLE country_consumption AS
 
 WITH filter_values_returned AS (
     SELECT
