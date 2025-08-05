@@ -1,7 +1,7 @@
 -- SQLite
 SELECT * 
 FROM transactions
-ORDER BY StockCode DESC;
+WHERE StockCode IN ('POST', 'SAMPLES', 'm', 'M', 'DOT', 'PADS');
 
 
 --WHERE Description IS NOT NULL
@@ -13,14 +13,10 @@ ORDER BY StockCode DESC;
 -- DCG0076 - Luminaria Noturna
 -- BANK CHARGES - Encargos bancários 
 
--- analisar se a organizacao dos StockCOde fez com que as subissem
+-- analisar se a organizacao dos StockCode fez com que as subissem
 -- essa base mostra tanto valores de venda quanto de devolucao de items
     -- Como exemplo este CustomerID 14911.0
 
-
-
--- criacao de um filtro para uma classificacao de items que foram comprados (nao sendo estornados)
--- e que também bem sao consumidos com certa periodicidade, por exemplo comprar pao, ou items de festa de aniversário.
 
 
 -- politica de devolucao de uso, devolvendo com uma taxa mais alta.
