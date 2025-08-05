@@ -1,7 +1,7 @@
 -- SQLite
 SELECT * 
 FROM transactions
-WHERE StockCode IN ('POST', 'SAMPLES', 'm', 'M', 'DOT', 'PADS');
+WHERE StockCode NOT IN ('POST', 'SAMPLES', 'm', 'M', 'DOT', 'PADS');
 
 
 --WHERE Description IS NOT NULL
