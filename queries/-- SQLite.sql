@@ -1,29 +1,9 @@
 -- SQLite
-SELECT * 
+SELECT
+    avg(InvoiceDate) AS avg_date,
+    min(InvoiceDate) AS min_date,
+    max(InvoiceDate) AS max_date
 FROM transactions
-WHERE StockCode NOT IN ('POST', 'SAMPLES', 'm', 'M', 'DOT', 'PADS');
-
-
---WHERE Description IS NOT NULL
---WHERE StockCode IN ('POST', 'SAMPLES', 'm', 'M', 'DOT', 'PADS')
-
---PADS parece ser items de trabeceiros
--- DCGDDGIRL - Pacote de doces de festa de meninas
--- DCGSSBOY - Pacote de doces de festa de meninos
--- DCG0076 - Luminaria Noturna
--- BANK CHARGES - Encargos bancários 
-
--- analisar se a organizacao dos StockCode fez com que as subissem
--- essa base mostra tanto valores de venda quanto de devolucao de items
-    -- Como exemplo este CustomerID 14911.0
-
-
-
--- politica de devolucao de uso, devolvendo com uma taxa mais alta.
--- analisar essa situacao do CustomerID 17837.0 (onde ele compra 18 e devolve 4)
-
-
-
--- entao dentro dessas devolucoes podem ter:
--- Casos em que devolve tudo fica no O=0
--- Casos que devolve parcialmente ver se tem alguma taxa
+WHERE StockCode NOT IN ('POST', 'SAMPLES', 'm', 'M', 'DOT', 'PADS')
+AND CustomerID NOT NULL
+GROUP BY CustomerID;
