@@ -8,4 +8,5 @@ scikit-learn
 graphviz
 chardet
 ipython
+shap
 nbformat>=4.2.0

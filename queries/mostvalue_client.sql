@@ -1,10 +1,15 @@
 --DROP TABLE IF EXISTS mostvalue_client; --if needed delete or refresh table
 --CREATE TABLE mostvalue_client AS
 
-WITH global_max_date AS (
-    SELECT 
-    MAX(InvoiceDate) AS max_date_invoice
+WITH date_analytics AS (
+    SELECT
+        CustomerID,
+        MIN(InvoiceDate) AS min_date,
+        MAX(InvoiceDate) AS max_date,
+        AVG(InvoiceDate) AS avg_date
     FROM transactions
+    WHERE CustomerID IS NOT NULL
+    GROUP BY CustomerID
 ),
 
 filter_values_returned AS (
@@ -16,10 +21,7 @@ filter_values_returned AS (
         SUM(CASE WHEN Quantity > 0 THEN Quantity ELSE 0 END) AS total_bought,
         ABS(SUM(CASE WHEN Quantity < 0 THEN Quantity ELSE 0 END)) AS total_returned,
         Country,
-        avg(InvoiceDate) AS avgseasonality_date, -- which is the average purchase date
-        min(InvoiceDate) AS firstpurchase_date, -- which is the first purchase date
-        max(InvoiceDate) AS lastpurchase_date, -- which is the last purchase date
-        count(InvoiceDate) AS total_transactions_appear,
+        count(InvoiceDate) AS total_days_appear,
         COUNT (DISTINCT InvoiceDate) AS frequency
     FROM transactions
     WHERE Description IS NOT NULL
@@ -34,16 +36,11 @@ net_calculated AS (
         f.StockCode,
         f.Description,
         f.UnitPrice,
-        f.total_bought - f.total_returned AS net_quantity,
+        (f.total_bought - f.total_returned) AS net_quantity,
         f.Country,
-        f.avgseasonality_date,
-        f.firstpurchase_date,
-        f.lastpurchase_date,
-        (g.max_date_invoice - f.lastpurchase_date) AS recency,
         f.frequency,
-        f.total_transactions_appear
+        f.total_days_appear
     FROM filter_values_returned f
-    CROSS JOIN global_max_date g
 ),
 
 client_summary AS (
@@ -53,29 +50,27 @@ client_summary AS (
         COUNT(StockCode) AS total_items,
         COUNT(DISTINCT StockCode) AS unique_items,
         ROUND(AVG(UnitPrice), 2) AS avg_price,
-        SUM(total_transactions_appear) AS total_transactions_appear,
+        total_days_appear,
         ROUND(SUM(net_quantity * UnitPrice), 2) AS revenue,
-        MAX(recency) AS recency,
-        frequency,
-        avgseasonality_date,
-        firstpurchase_date,
-        lastpurchase_date
+        frequency
     FROM net_calculated
     WHERE CustomerID IS NOT NULL
     GROUP BY CustomerID
 )
 
 SELECT
-    CustomerID,
-    total_items,
-    unique_items,
-    avg_price,
-    revenue,
-    recency,
-    frequency,
-    ROUND(avgseasonality_date, 2) AS avgseasonality_date,
-    ROUND(firstpurchase_date, 2) AS firstpurchase_date,
-    ROUND(lastpurchase_date, 2) AS lastpurchase_date,
-    Country
-FROM client_summary
-ORDER BY revenue DESC;
+    cs.CustomerID,
+    cs.total_items,
+    cs.unique_items,
+    cs.avg_price,
+    cs.revenue,
+    cs.frequency,
+    cs.Country,
+    cs.total_days_appear,
+    da.min_date,
+    da.max_date,
+    da.avg_date
+FROM client_summary cs
+JOIN date_analytics da
+  ON cs.CustomerID = da.CustomerID
+ORDER BY cs.revenue DESC;
