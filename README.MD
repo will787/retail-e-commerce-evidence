@@ -57,10 +57,8 @@ Now you can download this library:
 
 * This metric consist in the 'Average Revenue Per User', we using to identify which country is better perform in the product, what have Customer more interest in therms of Revenue, we can see in this graph interactive: 
 
-<div align="center">  
-    <video src="assets/word_metrics.mp4" width="500" controls>
-    Your navigate not support of type this video
-    </video>
+<div align="center">
+  <img src="assets/word_metrics.gif" alt="Project Demonstration ARPU Metric">
 </div>
 
 ## Database Cleanning & Find the Right Customer
