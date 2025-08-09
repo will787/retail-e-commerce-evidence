@@ -72,7 +72,7 @@ Now you can download this library:
 * Undestand also about process of returned product, when client buy something, but don`t use every of this thing or this thing have problem him don't work very well, soo the customer back to shop to receive your money.
 
 
-## Elbow Method
+## Elbow Method - Best Cluster Distance
 
 * This constant method used to identify optimazation for Kmeans cluster. We define to find the best cluster optimal point. What happeneed in highly the quantity  of cluster in Kmeans that have difference between the clusters if abble to very small, and the difference of observation intra-clusters will increasing. Soo we need to find equilibrium in the observation that made each group would more possibly homeigeneity and that the formed group would more different what the others.
 
