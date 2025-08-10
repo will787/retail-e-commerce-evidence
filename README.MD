@@ -1,6 +1,6 @@
 # E-Commerce Data - Retail Evidence for Clustering Approach
 
-- This project was devolopment to understand how segmentation works in the clients, we using Machine Learning Algorithms, in specific Unsupervisioned Learning. Using different tips for analyse customer segmentation on the database extract query. 
+- This project was devolopment to understand how segmentation works in the clients, we using Machine Learning Algorithms, in specific Unsupervisioned Learning. Using different tips for analyze customer segmentation on the database extraction query. 
 
 - Extremally important this data used by the kaggle project: [Ecommerce Data](https://www.kaggle.com/datasets/carrie1/ecommerce-data)
 
@@ -28,7 +28,7 @@ retail-e-commerce-evidence/
 ├── requirements.txt
 └── updates.txt
 ```
-* analytics/: Contains all of the analysis, process segmentation and optization of the algorithm; you will see the process for categorization using `Kmeans`, `Elbow Method` and `PCA`. Here we using the method of RFM (Recency, Frequency, Monetary) important in the context for e-commerce, identify the oportunities and know more about your clients, potential new outcomes.
+* analytics/: Contains all of the analysis, process segmentation and optmization of the algorithm; you will see the process for categorization using `Kmeans`, `Elbow Method` and `PCA`. Here we using the method of RFM (Recency, Frequency, Monetary) important in the context for e-commerce, identify the oportunities and know more about your clients, potential new results.
 
 * data/: Basicly first data, not have treatment, will use to understand of data and the read for cleanning and filters data.
 
